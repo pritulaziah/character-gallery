@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, ImgHTMLAttributes } from "react";
+import { useState, useRef, ImgHTMLAttributes } from "react";
+import useIntersection from "../hooks/useIntersection";
 
 interface IProps extends ImgHTMLAttributes<HTMLImageElement> {
   src: string;
@@ -19,49 +20,11 @@ const Img = ({
   offset,
   ...restProps
 }: IProps) => {
-  const [visible, setVisible] = useState(false);
   const [hasError, setHasError] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
-
-  useEffect(() => {
-    if (!lazy) {
-      // Ругается и падает, если возращать что-то отличное от undefined or nothing.
-      return undefined;
-    }
-
-    let observer: IntersectionObserver;
-    let didCancel = false;
-    const { current } = imageRef;
-
-    if (current && !visible) {
-      if ("IntersectionObserver" in window) {
-        observer = new IntersectionObserver(
-          ([img]) => {
-            if (
-              !didCancel &&
-              (img.intersectionRatio > 0 || img.isIntersecting)
-            ) {
-              setVisible(true);
-              observer.unobserve(current);
-            }
-          },
-          { rootMargin: `${offset || window.innerHeight}px 0px 0px 0px` }
-        );
-        observer.observe(current);
-      } else {
-        // Old browsers fallback: https://caniuse.com/#search=IntersectionObserver
-        setVisible(true);
-      }
-    }
-
-    return () => {
-      didCancel = true;
-      // on component cleanup, we remove the listner
-      if (observer?.unobserve && current) {
-        observer.unobserve(current);
-      }
-    };
-  }, [lazy, visible, offset]);
+  const inView = useIntersection(imageRef, {
+    defaultInView: !lazy,
+  });
 
   const onLoad = () => {
     loadImage && imageRef.current && loadImage(imageRef.current);
@@ -72,7 +35,6 @@ const Img = ({
     errorImage && imageRef.current && errorImage(imageRef.current);
   };
 
-  const isShow = visible || !lazy;
   const isAlt = hasError && altSrc;
 
   return (
@@ -80,10 +42,10 @@ const Img = ({
       {...restProps}
       style={{
         ...restProps.style,
-        visibility: isAlt || isShow ? "visible" : "hidden",
+        visibility: isAlt || inView ? "visible" : "hidden",
       }}
       ref={imageRef}
-      src={isAlt ? altSrc : isShow ? src : undefined}
+      src={isAlt ? altSrc : inView ? src : undefined}
       alt={alt}
       onLoad={onLoad}
       onError={onError}

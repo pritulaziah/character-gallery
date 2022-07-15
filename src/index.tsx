@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
+import { Global } from "@emotion/react/macro";
 import { QueryClient, QueryClientProvider } from "react-query";
 import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
@@ -14,9 +14,24 @@ const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <Global
+        styles={{
+          body: {
+            fontFamily: "sans-serif",
+            width: "100%",
+            minHeight: "100vh",
+          },
+          "*": {
+            margin: 0,
+            padding: 0,
+            boxSizing: "border-box",
+          },
+        }}
+      />
       <App />
     </QueryClientProvider>
   </React.StrictMode>

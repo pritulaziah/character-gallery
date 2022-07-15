@@ -7,6 +7,7 @@ import { ClassNames } from "@emotion/react/macro";
 const SliderMain = styled("div")`
   width: 100%;
   height: 100%;
+  position: relative;
 `;
 
 const SliderWrapper = styled("div")`
@@ -101,11 +102,11 @@ const Slider = ({ collection }: IProps) => {
         <ClassNames>
           {({ css }) => (
             <Img
-              style={{ objectFit: "contain" }}
               className={css`
                 width: 100%;
                 height: 100%;
                 z-index: 10;
+                object-fit: contain;
               `}
               src={currentSlide}
               loadImage={loadImage}

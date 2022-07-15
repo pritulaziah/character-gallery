@@ -1,12 +1,7 @@
-import './App.css';
-import CharacterList from './components/CharacterList';
+import CharacterList from "./components/Characters/CharacterList";
 
-function App() {
-  return (
-    <div className="App">
-      <CharacterList />
-    </div>
-  );
-}
+const App = () => {
+  return <CharacterList />;
+};
 
 export default App;
