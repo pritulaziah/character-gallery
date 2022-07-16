@@ -1,7 +1,7 @@
-import CharacterList from "./components/Characters/CharacterList";
+import Characters from "./components/Characters";
 
 const App = () => {
-  return <CharacterList />;
+  return <Characters />;
 };
 
 export default App;

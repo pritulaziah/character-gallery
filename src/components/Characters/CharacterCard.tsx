@@ -2,7 +2,7 @@ import Character from "../../types/character";
 import styled from "@emotion/styled/macro";
 import { ClassNames } from "@emotion/react/macro";
 import { Arrow } from "../Slider/SliderArrow";
-import Intersection from "../Intersection/Intersection";
+import Intersection from "../Intersection";
 import CharacterGallery from "./CharacterGallery";
 
 const Card = styled("div")`

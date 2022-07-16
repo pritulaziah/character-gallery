@@ -5,6 +5,7 @@ import { Global } from "@emotion/react/macro";
 import { QueryClient, QueryClientProvider } from "react-query";
 import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 axios.defaults.baseURL = "https://api.jikan.moe/v4";
 
@@ -32,7 +33,11 @@ root.render(
           },
         }}
       />
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+        </Routes>
+      </BrowserRouter>
     </QueryClientProvider>
   </React.StrictMode>
 );

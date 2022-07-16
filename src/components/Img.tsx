@@ -3,17 +3,17 @@ import useIntersection from "../hooks/useIntersection";
 
 interface IProps extends ImgHTMLAttributes<HTMLImageElement> {
   src: string;
-  lazy: boolean;
+  lazy?: boolean;
   altSrc?: string;
-  loadImage: (image: HTMLImageElement) => void;
-  errorImage: (image: HTMLImageElement) => void;
+  loadImage?: (image: HTMLImageElement) => void;
+  errorImage?: (image: HTMLImageElement) => void;
   offset?: number;
 }
 
 const Img = ({
   src,
   alt = "",
-  lazy,
+  lazy = true,
   altSrc,
   loadImage,
   errorImage,
