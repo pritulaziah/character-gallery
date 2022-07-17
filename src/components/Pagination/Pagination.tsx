@@ -1,5 +1,5 @@
 import styled from "@emotion/styled/macro";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import Button from "../Button";
 import PaginationButton from "./PaginationButton";
 
@@ -15,9 +15,15 @@ interface IProps {
   currentPage: number;
   totalPage: number;
   pageCount?: number;
+  onChangePage: (page: number) => void;
 }
 
-const Pagination = ({ currentPage, totalPage, pageCount = 2 }: IProps) => {
+const Pagination = ({
+  currentPage,
+  totalPage,
+  pageCount = 2,
+  onChangePage,
+}: IProps) => {
   const pagination = useMemo(() => {
     const left = currentPage - pageCount;
     const right = currentPage + pageCount + 1;
@@ -49,23 +55,43 @@ const Pagination = ({ currentPage, totalPage, pageCount = 2 }: IProps) => {
     });
 
     return rangeWithDots;
-  }, []);
+  }, [currentPage, pageCount, totalPage]);
+
+  const createProps = (page: number) => ({
+    role: "button",
+    onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      onChangePage(page);
+    },
+  });
 
   return (
     <PaginationList>
       {currentPage >= 2 && (
         <li>
-          <Button>Предыдущая</Button>
+          <Button aria-label="prev" {...createProps(currentPage - 1)}>
+            Prev
+          </Button>
         </li>
       )}
-      {pagination.map((paginationItem) => (
-        <PaginationButton active={paginationItem === currentPage}>
+      {pagination.map((paginationItem, index) => (
+        <PaginationButton
+          key={typeof paginationItem === 'number' ? paginationItem : `dot-${index}`}
+          active={paginationItem === currentPage}
+          {...createProps(
+            typeof paginationItem === "number"
+              ? paginationItem
+              : currentPage + Math.floor((pageCount - currentPage) / 2)
+          )}
+        >
           {paginationItem}
         </PaginationButton>
       ))}
       {currentPage < totalPage && (
         <li>
-          <Button>Следущая</Button>
+          <Button aria-label="next" {...createProps(currentPage + 1)}>
+            Next
+          </Button>
         </li>
       )}
     </PaginationList>

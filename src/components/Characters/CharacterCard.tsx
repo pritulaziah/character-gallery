@@ -1,8 +1,6 @@
 import Character from "../../types/character";
 import styled from "@emotion/styled/macro";
-import { ClassNames } from "@emotion/react/macro";
 import { Arrow } from "../Slider/SliderArrow";
-import Intersection from "../Intersection";
 import CharacterGallery from "./CharacterGallery";
 
 const Card = styled("div")`
@@ -40,18 +38,7 @@ interface IProps {
 const CharacterCard = ({ character }: IProps) => {
   return (
     <Card>
-      <ClassNames>
-        {({ css }) => (
-          <Intersection
-            className={css`
-              width: 100%;
-              height: 240px;
-            `}
-          >
-            <CharacterGallery character={character} />
-          </Intersection>
-        )}
-      </ClassNames>
+      <CharacterGallery character={character} />
       <Info>
         <Name>{character.name}</Name>
         <Name>{character.name_kanji}</Name>

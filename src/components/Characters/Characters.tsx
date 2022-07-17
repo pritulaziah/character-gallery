@@ -6,22 +6,32 @@ import styled from "@emotion/styled/macro";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../Pagination";
 
+const Container = styled("div")`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 0;
+`;
+
 const Grid = styled("div")`
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 `;
 
 const Characters = () => {
-  let [searchParams] = useSearchParams();
+  const [searchParams,setSearchParams] = useSearchParams();
   const page = searchParams.has("page") ? Number(searchParams.get("page")) : 1;
   const { data } = useQuery<{
     data: Character[];
     pagination: CharactersPagination;
-  }>(["characters", page], queryFn(`/characters`, { page, limit: 16 }));
+  }>(["characters", page], queryFn(`/characters`, { page }));
+
+  const onChangePage = (page: number) => {
+    setSearchParams({ page: String(page) });
+  };
 
   return (
-    <div style={{ maxWidth: '960px', margin: '0 auto', padding: '60px 0' }}>
+    <Container>
       <Grid>
         {(data?.data || []).map((character) => (
           <CharacterCard character={character} key={character.mal_id} />
@@ -30,10 +40,11 @@ const Characters = () => {
       {data?.pagination && (
         <Pagination
           currentPage={page}
-          totalPage={data.pagination.items.total}
+          totalPage={data.pagination.last_visible_page}
+          onChangePage={onChangePage}
         />
       )}
-    </div>
+    </Container>
   );
 };
 

@@ -1,22 +1,27 @@
-import { useQuery } from "react-query";
-import queryFn from "../../utils/queryFn";
 import Character from "../../types/character";
-import Slider from "../Slider/Slider";
+import Img from "../Img";
+import { ClassNames } from "@emotion/react/macro";
 
 interface IProps {
   character: Character;
 }
 
 const CharacterGallery = ({ character }: IProps) => {
-  const characterId = character.mal_id;
-  const { data } = useQuery<{ data: Character["images"][] }>(
-    ["characterImages", characterId],
-    queryFn(`/characters/${characterId}/pictures`)
+  return (
+    <ClassNames>
+      {({ css }) => (
+        <Img
+          src={character.images.jpg.image_url}
+          lazy
+          className={css`
+            width: 100%;
+            height: 240px;
+            object-fit: contain;
+          `}
+        />
+      )}
+    </ClassNames>
   );
-
-  const preparedImages = (data?.data || []).map((image) => image.jpg.image_url);
-
-  return <Slider collection={preparedImages} />;
 };
 
 export default CharacterGallery;
