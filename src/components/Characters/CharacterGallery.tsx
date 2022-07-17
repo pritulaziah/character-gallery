@@ -1,5 +1,5 @@
-import Character from "../../types/character";
-import Img from "../Img";
+import Character from "types/character";
+import Img from "components/Img";
 import { ClassNames } from "@emotion/react/macro";
 
 interface IProps {

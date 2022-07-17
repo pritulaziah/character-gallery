@@ -1,5 +1,5 @@
 import { useState, useRef, ImgHTMLAttributes } from "react";
-import useIntersection from "../hooks/useIntersection";
+import useIntersection from "hooks/useIntersection";
 
 interface IProps extends ImgHTMLAttributes<HTMLImageElement> {
   src: string;

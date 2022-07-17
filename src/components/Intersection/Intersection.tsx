@@ -1,5 +1,5 @@
 import React, { ElementType, HTMLAttributes, useRef } from 'react';
-import useIntersection, { IntersectionOptions } from '../../hooks/useIntersection';
+import useIntersection, { IntersectionOptions } from 'hooks/useIntersection';
 
 interface IProps extends HTMLAttributes<HTMLElement>{
   children: React.ReactNode

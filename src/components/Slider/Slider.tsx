@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SliderArrow from "./SliderArrow";
-import Img from "../Img";
+import Img from "components/Img";
 import styled from "@emotion/styled/macro";
 import { ClassNames } from "@emotion/react/macro";
 

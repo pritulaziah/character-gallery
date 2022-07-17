@@ -1,4 +1,4 @@
-import Character from "../../types/character";
+import Character from "types/character";
 import styled from "@emotion/styled/macro";
 import { Arrow } from "../Slider/SliderArrow";
 import CharacterGallery from "./CharacterGallery";
