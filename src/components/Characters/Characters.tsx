@@ -1,4 +1,4 @@
-import Character, { CharactersPagination } from "types/character";
+import { Character, CharactersPagination } from "types/character";
 import CharacterCard from "./CharacterCard";
 import { useQuery } from "react-query";
 import queryFn from "../../utils/queryFn";

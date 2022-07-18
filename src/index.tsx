@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Characters from "components/Characters";
+import Character from "components/Character";
 
 axios.defaults.baseURL = "https://api.jikan.moe/v4";
 
@@ -35,7 +37,12 @@ root.render(
       />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
+          <Route path="/" element={<App />}>
+            <Route path="characters">
+              <Route index element={<Characters />} />
+              <Route path=":characterId" element={<Character />} />
+            </Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

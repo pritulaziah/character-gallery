@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SliderArrow from "./SliderArrow";
+import SliderArrow, { SliderArrowStyled } from "./SliderArrow";
 import Img from "components/Img";
 import styled from "@emotion/styled/macro";
 import { ClassNames } from "@emotion/react/macro";
@@ -139,5 +139,7 @@ const Slider = ({ collection }: IProps) => {
     </SliderMain>
   );
 };
+
+export { SliderArrowStyled };
 
 export default Slider;

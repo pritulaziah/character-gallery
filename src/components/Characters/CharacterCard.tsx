@@ -1,6 +1,5 @@
-import Character from "types/character";
+import { Character } from "types/character";
 import styled from "@emotion/styled/macro";
-import { Arrow } from "../Slider/SliderArrow";
 import CharacterGallery from "./CharacterGallery";
 
 const Card = styled("div")`
@@ -8,12 +7,6 @@ const Card = styled("div")`
   transition: box-shadow 0.3s ease-in-out;
   position: relative;
   border-radius: 16px;
-
-  &:hover {
-    ${Arrow} {
-      opacity: 1;
-    }
-  }
 `;
 
 const Info = styled("div")`

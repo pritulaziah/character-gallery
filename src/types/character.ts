@@ -1,26 +1,28 @@
 export interface CharactersPagination {
-  current_page: number
-  has_next_page: boolean
+  current_page: number;
+  has_next_page: boolean;
   items: {
-    count: number, total: number, per_page: number
-  }
-  last_visible_page: number
+    count: number;
+    total: number;
+    per_page: number;
+  };
+  last_visible_page: number;
 }
 
-export interface CharacterImage {
-  jpg: {
-    image_url: string;
-  };
-  webp: {
-    image_url: string;
-    small_image_url: string;
-  };
+type Image = {
+  image_url: string;
+  small_image_url: string;
+};
+
+export interface Images {
+  jpg: Image;
+  webp: Image;
 }
 
-interface Character {
+export interface Character {
   about: string;
   favorites: number;
-  images: CharacterImage;
+  images: Images;
   mal_id: number;
   name: string;
   name_kanji: string;
@@ -28,4 +30,32 @@ interface Character {
   url: string;
 }
 
-export default Character;
+interface Manga {
+  mal_id: number;
+  url: string;
+  images: Images;
+  title: string;
+}
+
+interface Anime extends Manga {}
+
+export interface FullCharacter extends Character {
+  url: string;
+  manga: Array<{
+    manga: Manga;
+    role: string;
+  }>;
+  anime: Array<{
+    anime: Anime;
+    role: string;
+  }>;
+  voice: Array<{
+    person: {
+      mal_id: number;
+      url: string;
+      images: Omit<Images, "webp">;
+      name: string;
+    };
+    language: string;
+  }>;
+}
