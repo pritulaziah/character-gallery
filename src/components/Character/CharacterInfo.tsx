@@ -44,7 +44,7 @@ const TableDescriptionStyled = styled(TableCellStyled)`
 const CharacterInfo = ({ info }: IProps) => (
   <TableStyled>
     {info.map(([label, description]) => (
-      <TableRowStyled>
+      <TableRowStyled key={label}>
         <TableLabelStyled>{label}</TableLabelStyled>
         <TableDescriptionStyled
           dangerouslySetInnerHTML={{

@@ -46,32 +46,38 @@ const Character = () => {
 
   const character = characterData?.data;
 
-  const preparedImages = useMemo(
-    () =>
-      (characterPicturesData?.data || []).map((image) => image.jpg.image_url),
-    [characterPicturesData]
-  );
-
   if (character) {
+    const pictures = characterPicturesData?.data;
+    const collectionPictures = new Set<string>([
+      character.images.jpg.image_url,
+    ]);
+
+    if (pictures) {
+      for (const pic of pictures) {
+        collectionPictures.add(pic.jpg.image_url);
+      }
+    }
+
     const aboutArray = character.about.split(/\n{2}/);
+
     const hasInfo = /(.*\:.*\n){3}/g.test(aboutArray[0]);
-    let info: React.ReactNode;
+    let characterInfo: [string, string][] | undefined;
 
     if (hasInfo) {
-      const characterInfo = aboutArray[0]
-        .split("\n")
-        .map((item) => item.split(":")) as [string, string][];
-
-      info = <CharacterInfo info={characterInfo} />;
+      const info = aboutArray.shift() as string;
+      characterInfo = info.split("\n").map((item) => item.split(":")) as [
+        string,
+        string
+      ][];
     }
 
     return (
       <div>
         <Card>
-          <Slider collection={preparedImages}></Slider>
+          <Slider collection={[...collectionPictures]}></Slider>
         </Card>
-        {info}
-        <BodyTextStyled>{aboutArray.slice(1).join("\n\n")}</BodyTextStyled>
+        {characterInfo && <CharacterInfo info={characterInfo} />}
+        <BodyTextStyled>{aboutArray.join("\n\n")}</BodyTextStyled>
       </div>
     );
   }
