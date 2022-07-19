@@ -97,15 +97,15 @@ const Character = () => {
     }
 
     const aboutArray = character.about.split(/\n{2}/);
-    const hasInfo = aboutArray[0].includes(':');
+    const hasInfo = aboutArray[0].includes(":");
     let characterInfo: [string, string][] | undefined;
 
     if (hasInfo) {
       const info = aboutArray.shift() as string;
-      characterInfo = info.split("\n").map((item) => item.split(":")) as [
-        string,
-        string
-      ][];
+      characterInfo = info
+        .split("\n")
+        .map((item) => item.split(":"))
+        .filter(item => item.length === 2) as [string, string][];
     }
 
     content = (
@@ -116,7 +116,9 @@ const Character = () => {
         <StyledBody>
           <StyledBodyHeader>
             <StyledBodyHeaderTitle>
-              {`${character.name}${character.name_kanji ? ` / ${character.name_kanji}` : ''}`}
+              {`${character.name}${
+                character.name_kanji ? ` / ${character.name_kanji}` : ""
+              }`}
             </StyledBodyHeaderTitle>
             <Link href={character.url} target="_blank">
               <StyledBodyLinkWrapper>
