@@ -1,23 +1,24 @@
 import { useState } from "react";
-import SliderArrow, { SliderArrowStyled } from "./SliderArrow";
+import SliderArrow, { StyledSliderArrow } from "./SliderArrow";
 import Img from "components/Img";
 import styled from "@emotion/styled/macro";
 import { ClassNames } from "@emotion/react/macro";
+import Loader from "components/Loader";
 
-const SliderMain = styled("div")`
+const StyledSliderMain = styled("div")`
   width: 100%;
   height: 100%;
   position: relative;
 `;
 
-const SliderWrapper = styled("div")`
+const StyledSliderWrapper = styled("div")`
   width: 100%;
   display: flex;
   height: 100%;
   background-color: #f8f9f9;
 `;
 
-const SliderCounter = styled("div")`
+const StyledSliderCounter = styled("div")`
   position: absolute;
   background: rgba(51, 51, 51, 0.5);
   border-radius: 4px;
@@ -30,7 +31,7 @@ const SliderCounter = styled("div")`
   z-index: 15;
 `;
 
-const SliderBlur = styled("div")<{ url: string }>`
+const StyledSliderBlur = styled("div")<{ url: string }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -50,6 +51,15 @@ const SliderBlur = styled("div")<{ url: string }>`
     url(${(props) => props.url});
 `;
 
+const StyledLoaderWrapper = styled("div")`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  z-index: 10;
+`;
+
 export type Dir = "prev" | "next";
 
 interface IProps {
@@ -62,6 +72,7 @@ const Slider = ({ collection }: IProps) => {
   const [hasError, setHasError] = useState(false);
 
   const currentSlide = collection[currentIndex];
+  const prevSlider = collection[Math.max(currentIndex - 1, 0)];
   const slidesCount = collection.length;
 
   const onChangeSlide = (direction: Dir) => {
@@ -98,7 +109,7 @@ const Slider = ({ collection }: IProps) => {
 
     return (
       <>
-        {!isLoading && <SliderBlur url={currentSlide} />}
+        <StyledSliderBlur url={isLoading ? prevSlider : currentSlide} />
         <ClassNames>
           {({ css }) => (
             <Img
@@ -122,8 +133,8 @@ const Slider = ({ collection }: IProps) => {
   const hasSlides = slidesCount > 1;
 
   return (
-    <SliderMain>
-      <SliderWrapper>{renderImage()}</SliderWrapper>
+    <StyledSliderMain>
+      <StyledSliderWrapper>{renderImage()}</StyledSliderWrapper>
       {hasSlides && (
         <>
           <SliderArrow onChangeSlide={onChangeSlide} dir="prev" />
@@ -131,15 +142,19 @@ const Slider = ({ collection }: IProps) => {
         </>
       )}
       {hasSlides && (
-        <SliderCounter>
+        <StyledSliderCounter>
           {currentIndex + 1}/{slidesCount}
-        </SliderCounter>
+        </StyledSliderCounter>
       )}
-      {isLoading && <>{/* todo */}</>}
-    </SliderMain>
+      {isLoading && (
+        <StyledLoaderWrapper>
+          <Loader size="medium" color="#333" />
+        </StyledLoaderWrapper>
+      )}
+    </StyledSliderMain>
   );
 };
 
-export { SliderArrowStyled };
+export { StyledSliderArrow };
 
 export default Slider;

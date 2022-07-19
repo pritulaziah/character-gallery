@@ -1,8 +1,8 @@
-import IconWrapper, { IconWrapperProps } from "components/Icons/IconWrapper";
+import IconWrapper, { IconWrapperProps } from "./IconWrapper";
 
 const Right = (props: IconWrapperProps) => (
   <IconWrapper {...props}>
-    <svg fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
         clipRule="evenodd"

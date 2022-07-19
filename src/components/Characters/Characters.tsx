@@ -6,16 +6,10 @@ import styled from "@emotion/styled/macro";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../Pagination";
 
-const Container = styled("div")`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 0;
-`;
-
-const Grid = styled("div")`
+const StyledGrid = styled("div")`
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 `;
 
 const Characters = () => {
@@ -31,12 +25,12 @@ const Characters = () => {
   };
 
   return (
-    <Container>
-      <Grid>
+    <>
+      <StyledGrid>
         {(data?.data || []).map((character) => (
           <CharacterCard character={character} key={character.mal_id} />
         ))}
-      </Grid>
+      </StyledGrid>
       {data?.pagination && (
         <Pagination
           currentPage={page}
@@ -44,7 +38,7 @@ const Characters = () => {
           onChangePage={onChangePage}
         />
       )}
-    </Container>
+    </>
   );
 };
 

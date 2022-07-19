@@ -9,7 +9,7 @@ interface IProps {
   onChangeSlide: (dir: Dir) => void;
 }
 
-export const SliderArrowStyled = styled("div")<{ dir: Dir }>`
+export const StyledSliderArrow = styled("div")<{ dir: Dir }>`
   position: absolute;
   opacity: 0;
   padding: 0 15px;
@@ -22,7 +22,7 @@ export const SliderArrowStyled = styled("div")<{ dir: Dir }>`
   ${(props) => (props.dir === "prev" ? `left: 0` : `right: 0`)};
 `;
 
-const SliderArrowIconStyled = styled("span")`
+const StyledSliderArrowIcon = styled("span")`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,11 +34,11 @@ const SliderArrow = ({ dir, onChangeSlide }: IProps) => {
   const onClick = (event: React.MouseEvent<HTMLElement>) => onChangeSlide(dir);
 
   return (
-    <SliderArrowStyled onClick={onClick} dir={dir}>
-      <SliderArrowIconStyled>
+    <StyledSliderArrow onClick={onClick} dir={dir}>
+      <StyledSliderArrowIcon>
         {dir === "next" ? <RightIcon /> : <LeftIcon />}
-      </SliderArrowIconStyled>
-    </SliderArrowStyled>
+      </StyledSliderArrowIcon>
+    </StyledSliderArrow>
   );
 };
 

@@ -2,55 +2,93 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import queryFn from "utils/queryFn";
 import { Images, FullCharacter } from "types/character";
-import { useMemo } from "react";
 import styled from "@emotion/styled/macro";
-import Slider, { SliderArrowStyled } from "components/Slider";
+import Slider, { StyledSliderArrow } from "components/Slider";
 import CharacterInfo from "./CharacterInfo";
+import IconLink from "components/Icons/Link";
+import Link from "components/Link";
+import Loader from "components/Loader";
 
-const BodyTextStyled = styled("div")`
+const StyledBody = styled("div")`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledBodyLinkWrapper = styled("div")`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledBodyLinkWrapperIcon = styled("span")`
+  margin-right: 4px;
+`;
+
+const StyledBodyHeader = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  padding: 8px;
+`;
+
+const StyledBodyHeaderTitle = styled("h3")`
+  font-size: 16px;
+  line-height: 24px;
+  color: #1d2129;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0;
+`;
+
+const StyledBodyText = styled("div")`
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
   color: #1d2129;
   white-space: pre-wrap;
+  padding: 8px;
 `;
 
-const Card = styled("div")`
-  box-shadow: 0 3px 15px 3px rgb(153 153 153 / 20%);
-  transition: box-shadow 0.3s ease-in-out;
-  position: relative;
-  border-radius: 16px;
-  height: 240px;
+const StyledSliderWrapper = styled("div")`
+  display: flex;
+  height: 350px;
+  margin: 0 auto 12px;
+  max-width: 35%;
+  width: 100%;
 
   &:hover {
-    ${SliderArrowStyled} {
+    ${StyledSliderArrow} {
       opacity: 1;
     }
   }
 `;
 
+const StyledCharacter = styled("div")`
+  display: flex;
+  flex-direction: column;
+`;
+
 const Character = () => {
   const { characterId } = useParams();
-  const { data: characterData, isLoading: characterIsLoading } = useQuery<{
+  const { data: characterData, isLoading: characterDataIsLoading } = useQuery<{
     data: FullCharacter;
   }>(
     ["characterFullById", characterId],
     queryFn(`/characters/${characterId}/full`)
   );
-  const { data: characterPicturesData, isLoading: characterPicturesIsLoading } =
-    useQuery<{ data: Images[] }>(
-      ["characterImages", characterId],
-      queryFn(`/characters/${characterId}/pictures`)
-    );
+  const { data: characterPicturesData } = useQuery<{ data: Images[] }>(
+    ["characterImages", characterId],
+    queryFn(`/characters/${characterId}/pictures`)
+  );
 
   const character = characterData?.data;
+  let content: React.ReactNode = null;
 
-  if (character) {
-    const pictures = characterPicturesData?.data;
+  if (character != null) {
     const collectionPictures = new Set<string>([
       character.images.jpg.image_url,
     ]);
+    const pictures = characterPicturesData?.data;
 
     if (pictures) {
       for (const pic of pictures) {
@@ -59,7 +97,6 @@ const Character = () => {
     }
 
     const aboutArray = character.about.split(/\n{2}/);
-
     const hasInfo = /(.*\:.*\n){3}/g.test(aboutArray[0]);
     let characterInfo: [string, string][] | undefined;
 
@@ -71,18 +108,37 @@ const Character = () => {
       ][];
     }
 
-    return (
-      <div>
-        <Card>
-          <Slider collection={[...collectionPictures]}></Slider>
-        </Card>
-        {characterInfo && <CharacterInfo info={characterInfo} />}
-        <BodyTextStyled>{aboutArray.join("\n\n")}</BodyTextStyled>
-      </div>
+    content = (
+      <>
+        <StyledSliderWrapper>
+          <Slider collection={[...collectionPictures]} />
+        </StyledSliderWrapper>
+        <StyledBody>
+          <StyledBodyHeader>
+            <StyledBodyHeaderTitle>
+              {`${character.name} / ${character.name_kanji}`}
+            </StyledBodyHeaderTitle>
+            <Link href={character.url}>
+              <StyledBodyLinkWrapper>
+                <StyledBodyLinkWrapperIcon>
+                  <IconLink size="14px" />
+                </StyledBodyLinkWrapperIcon>
+                MyAnimeList
+              </StyledBodyLinkWrapper>
+            </Link>
+          </StyledBodyHeader>
+          {characterInfo && <CharacterInfo info={characterInfo} />}
+          <StyledBodyText>{aboutArray.join("\n\n")}</StyledBodyText>
+        </StyledBody>
+      </>
     );
   }
 
-  return null;
+  if (characterDataIsLoading) {
+    content = <Loader size="large" />;
+  }
+
+  return <StyledCharacter>{content}</StyledCharacter>;
 };
 
 export default Character;

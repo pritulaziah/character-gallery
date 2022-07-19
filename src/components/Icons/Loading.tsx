@@ -1,4 +1,4 @@
-import IconWrapper, { IconWrapperProps } from "components/Icons/IconWrapper";
+import IconWrapper, { IconWrapperProps } from "./IconWrapper";
 
 const Loading = (props: IconWrapperProps) => (
   <IconWrapper {...props}>
