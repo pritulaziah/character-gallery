@@ -20,7 +20,7 @@ export interface Images {
 }
 
 export interface Character {
-  about: string;
+  about: string | null;
   favorites: number;
   images: Images;
   mal_id: number;

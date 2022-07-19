@@ -67,7 +67,7 @@ const Pagination = ({
             page:
               i < currentPage
                 ? Math.floor(currentPage / 2)
-                : currentPage + Math.floor((pageCount - currentPage) / 2),
+                : currentPage + Math.floor((totalPage - currentPage) / 2),
           });
         }
       }

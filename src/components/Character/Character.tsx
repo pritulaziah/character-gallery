@@ -39,16 +39,6 @@ const StyledBodyHeaderTitle = styled("h3")`
   margin-bottom: 0;
 `;
 
-const StyledBodyText = styled("div")`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
-  color: #1d2129;
-  white-space: pre-wrap;
-  padding: 8px;
-`;
-
 const StyledSliderWrapper = styled("div")`
   display: flex;
   height: 350px;
@@ -96,17 +86,21 @@ const Character = () => {
       }
     }
 
-    const aboutArray = character.about.split(/\n{2}/);
-    const hasInfo = aboutArray[0].includes(":");
-    let characterInfo: [string, string][] | undefined;
-
-    if (hasInfo) {
-      const info = aboutArray.shift() as string;
-      characterInfo = info
-        .split("\n")
-        .map((item) => item.split(":"))
-        .filter(item => item.length === 2) as [string, string][];
-    }
+    const infosArray = (character.about || '')
+      .split(/\n/)
+      .map((item) => item.trim())
+      .filter(Boolean);
+    const startTextIdx = infosArray.findIndex((item) => item.length > 150);
+    const characterInfo = (
+      startTextIdx !== -1 ? infosArray.slice(0, startTextIdx) : infosArray
+    )
+      .map((item) =>
+        item
+          .split(":", 2)
+          .map((item) => item.trim())
+          .filter(Boolean)
+      )
+      .filter((item) => item.length === 2) as [string, string][];
 
     content = (
       <>
@@ -129,8 +123,9 @@ const Character = () => {
               </StyledBodyLinkWrapper>
             </Link>
           </StyledBodyHeader>
-          {characterInfo && <CharacterInfo info={characterInfo} />}
-          <StyledBodyText>{aboutArray.join("\n\n")}</StyledBodyText>
+          {characterInfo && characterInfo.length > 0 && (
+            <CharacterInfo info={characterInfo} />
+          )}
         </StyledBody>
       </>
     );
