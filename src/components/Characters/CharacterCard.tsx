@@ -49,7 +49,7 @@ const CharacterCard = ({ character }: IProps) => {
       <CharacterGallery character={character} />
       <Info>
         <Name>{character.name}</Name>
-        <Name>{character.name_kanji}</Name>
+        {character.name_kanji && <Name>{character.name_kanji}</Name>}
       </Info>
     </Card>
   );

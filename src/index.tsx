@@ -5,7 +5,7 @@ import { Global } from "@emotion/react/macro";
 import { QueryClient, QueryClientProvider } from "react-query";
 import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import Characters from "components/Characters";
 import Character from "components/Character";
 
@@ -35,7 +35,7 @@ root.render(
           },
         }}
       />
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<App />}>
             <Route path="characters">
@@ -44,7 +44,7 @@ root.render(
             </Route>
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </QueryClientProvider>
   </React.StrictMode>
 );
