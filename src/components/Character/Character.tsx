@@ -86,7 +86,7 @@ const Character = () => {
       }
     }
 
-    const infosArray = (character.about || '')
+    const infosArray = (character.about || "")
       .split(/\n/)
       .map((item) => item.trim())
       .filter(Boolean);
@@ -94,12 +94,13 @@ const Character = () => {
     const characterInfo = (
       startTextIdx !== -1 ? infosArray.slice(0, startTextIdx) : infosArray
     )
-      .map((item) =>
-        item
-          .split(":", 2)
+      .map((item) => {
+        const firstSeparator = item.indexOf(":");
+
+        return [item.slice(0, firstSeparator), item.slice(firstSeparator + 1)]
           .map((item) => item.trim())
-          .filter(Boolean)
-      )
+          .filter(Boolean);
+      })
       .filter((item) => item.length === 2) as [string, string][];
 
     content = (
