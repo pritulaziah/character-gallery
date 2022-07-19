@@ -25,7 +25,7 @@ export interface Character {
   images: Images;
   mal_id: number;
   name: string;
-  name_kanji: string;
+  name_kanji: string | null;
   nicknames: string[];
   url: string;
 }

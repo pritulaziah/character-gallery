@@ -116,9 +116,9 @@ const Character = () => {
         <StyledBody>
           <StyledBodyHeader>
             <StyledBodyHeaderTitle>
-              {`${character.name} / ${character.name_kanji}`}
+              {`${character.name}${character.name_kanji ? ` / ${character.name_kanji}` : ''}`}
             </StyledBodyHeaderTitle>
-            <Link href={character.url}>
+            <Link href={character.url} target="_blank">
               <StyledBodyLinkWrapper>
                 <StyledBodyLinkWrapperIcon>
                   <IconLink size="14px" />

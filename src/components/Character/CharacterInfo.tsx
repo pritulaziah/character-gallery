@@ -12,18 +12,6 @@ const StyledTable = styled("div")`
   margin-bottom: 12px;
 `;
 
-const StyledTableRow = styled("div")`
-  display: flex;
-
-  & + & {
-    border-top: 1px solid #e5e6eb;
-  }
-
-  &:first-child {
-    border-top: none;
-  }
-`;
-
 const StyledTableCell = styled("div")`
   padding: 8px 20px;
   font-size: 14px;
@@ -34,6 +22,28 @@ const StyledTableLabel = styled(StyledTableCell)`
   background-color: #f7f8fa;
   flex: 1;
   color: #86909c;
+`;
+
+const StyledTableRow = styled("div")`
+  display: flex;
+
+  & + & {
+    border-top: 1px solid #e5e6eb;
+  }
+
+  &:first-of-type {
+    border-top: none;
+
+    ${StyledTableLabel} {
+      border-top-left-radius: 4px;
+    }
+  }
+
+  &:last-of-type {
+    ${StyledTableLabel} {
+      border-bottom-left-radius: 4px;
+    }
+  }
 `;
 
 const StyledTableDescription = styled(StyledTableCell)`
