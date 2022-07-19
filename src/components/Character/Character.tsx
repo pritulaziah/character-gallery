@@ -97,7 +97,7 @@ const Character = () => {
     }
 
     const aboutArray = character.about.split(/\n{2}/);
-    const hasInfo = /(.*\:.*\n){3}/g.test(aboutArray[0]);
+    const hasInfo = aboutArray[0].includes(':');
     let characterInfo: [string, string][] | undefined;
 
     if (hasInfo) {

@@ -24,7 +24,7 @@ root.render(
       <Global
         styles={{
           body: {
-            fontFamily: "sans-serif",
+            fontFamily: "Roboto",
             width: "100%",
             minHeight: "100vh",
           },

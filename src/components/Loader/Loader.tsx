@@ -35,7 +35,7 @@ const StyledLoader = styled("span")`
 const sizes: { [key in Sizes]: string } = {
   small: "24px",
   medium: "48px",
-  large: "60px",
+  large: "56px",
 };
 
 const Loader = ({ size = "medium", color = "#4E5969" }: IProps) => {

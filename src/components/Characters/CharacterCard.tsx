@@ -26,7 +26,6 @@ const Info = styled("div")`
 
 const Name = styled("div")`
   padding: 4px 0;
-  font-family: "Roboto";
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;

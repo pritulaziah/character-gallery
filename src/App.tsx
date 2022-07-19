@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import styled from "@emotion/styled/macro";
 
 const Container = styled("div")`
@@ -10,9 +10,12 @@ const Container = styled("div")`
 
 const App = () => {
   return (
-    <Container>
-      <Outlet />
-    </Container>
+    <>
+      <Link to="/characters">Characters</Link>
+      <Container>
+        <Outlet />
+      </Container>
+    </>
   );
 };
 

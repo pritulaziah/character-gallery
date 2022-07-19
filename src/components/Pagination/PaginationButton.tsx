@@ -1,8 +1,8 @@
 import React, { ButtonHTMLAttributes } from "react";
 import styled from "@emotion/styled/macro";
 
-const PaginationButtonStyled = styled("button")<{ active: boolean }>`
-  border-radius: 4px;
+const StyledPaginationButton = styled("button")<{ active: boolean }>`
+  border-radius: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,42 +10,37 @@ const PaginationButtonStyled = styled("button")<{ active: boolean }>`
   border: none;
   outline: none;
   cursor: pointer;
-  transition: color 0.3s;
+  transition: color 0.3s, backgound-color 0.3s;
   background-color: inherit;
-  padding: 12px 16px;
+  padding: 6px;
+  min-width: 36px;
+  min-height: 36px;
+  font-weight: 600;
   font-size: 16px;
-  line-height: 24px;
-  color: ${(props) => (props.active ? `#333333` : `#268CC7`)};
-
-  &:focus {
-    outline: none;
-  }
+  line-height: 22px;
+  color: ${(props) => (props.active ? `#165DFF` : `#4E5969`)};
+  background-color: ${(props) => (props.active ? `#E8F3FF` : `transparent`)};
 
   ${(props) =>
     !props.active &&
     `
       &:hover {
-        color: #F15044;
+        background-color: #F2F3F5;
+        color: #4E5969;
       }
     `};
-
-  &:active {
-    color: #333333;
-  }
 `;
 
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  active: boolean;
+  active?: boolean;
 }
 
 const PaginationButton = ({ children, active, ...other }: IProps) => {
   return (
-    <li>
-      <PaginationButtonStyled {...other} active={active}>
-        {children}
-      </PaginationButtonStyled>
-    </li>
+    <StyledPaginationButton {...other} active={!!active}>
+      {children}
+    </StyledPaginationButton>
   );
 };
 
