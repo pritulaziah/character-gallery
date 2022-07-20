@@ -38,9 +38,9 @@ root.render(
       <HashRouter>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route path="characters">
+            <Route path="/">
               <Route index element={<Characters />} />
-              <Route path=":characterId" element={<Character />} />
+              <Route path="characters/:characterId" element={<Character />} />
             </Route>
           </Route>
         </Routes>

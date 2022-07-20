@@ -70,7 +70,6 @@ const Slider = ({ collection }: IProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-
   const currentSlide = collection[currentIndex];
   const prevSlider = collection[Math.max(currentIndex - 1, 0)];
   const slidesCount = collection.length;
